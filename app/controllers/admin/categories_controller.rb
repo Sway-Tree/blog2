@@ -31,7 +31,7 @@ class Admin::CategoriesController < Admin::AdminsController
       @category = Category.find(params[:id])
  
       if @category.update(params[:category].permit(:name))
-        redirect_to @category
+        redirect_to admin_category_path(@category)
       else
         render 'edit'
       end
