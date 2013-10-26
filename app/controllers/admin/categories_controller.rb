@@ -8,7 +8,7 @@ class Admin::CategoriesController < Admin::AdminsController
   		@category = Category.new(params[:category].permit(:name))
  
   		if @category.save
-    		redirect_to @category
+    		redirect_to admin_category_path(@category)
   		else
     		render 'new'
   		end
@@ -41,7 +41,7 @@ class Admin::CategoriesController < Admin::AdminsController
       @category = Category.find(params[:id])
       @category.destroy
  
-      redirect_to categories_path
+      redirect_to admin_categories_path
   end
 
 end
