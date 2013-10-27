@@ -1,7 +1,7 @@
 Blog2::Application.routes.draw do
   
 
-  devise_for :admins, :controllers => {:welcome => "controllers/welcome", :categories => "admin/categories", 
+  devise_for :admins, :controllers => {:welcome => "adminwelcome", :categories => "admin/categories", 
     :posts => "admin/posts", :ccomments => "admin/comments"}
 
   namespace :admin do 
