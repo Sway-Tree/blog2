@@ -6,11 +6,18 @@ class Admin::PostsController < Admin::AdminsController
 	def create
   		@post = Post.new(params[:post].permit(:title, :text))
  
-  		if @post.save
-    		redirect_to admin_post_path(@post)
-  		else
-    		render 'new'
-  		end
+  		#if @post.save
+    	#	redirect_to admin_post_path(@post)
+  		#else
+    	#	render 'new'
+  		#end
+    begin
+      Admin::PostCreationService.new.process(@post)
+    rescue Admin::PostCreationService::PostCreationError
+      render 'new'
+    end
+
+      redirect_to admin_post_path(@post)
 	end
 
 	def show
@@ -46,5 +53,20 @@ class Admin::PostsController < Admin::AdminsController
   	def post_params
     	params.require(:post).permit(:title, :text)
   	end
+
+end
+
+class Admin::PostCreationService
+
+  class PostCreationError < StandardError; end
+
+  def intialize
+  end
+
+  def process(post)
+    unless post.save 
+      raise PostCreationError.new
+    end
+  end
 
 end
